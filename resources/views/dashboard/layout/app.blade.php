@@ -115,6 +115,29 @@
             });
         });
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        @if (session('absen_success'))
+            Swal.fire('Berhasil Absen !', '{{ session('success') }}', 'success');
+        @endif
+
+        @if (session('absen_error'))
+            Swal.fire('Oops Absen Gagal !', '{{ session('error') }}', 'error');
+        @endif
+    </script>
+
+    @if(session('status'))
+    <script>
+        Swal.fire({
+            position: "top-end",
+            title: 'Selamat Datang',
+            text: '{{ session('status') }}',
+            showConfirmButton: false,
+            timer: 3000
+        });
+    </script>
+    @endif
 </body>
 
 </html>

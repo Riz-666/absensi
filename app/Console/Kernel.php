@@ -12,7 +12,31 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->call(function(){
+            $now = Now();
+            $hari = $now->translatedFormat('1');
+            $tgl = $now->toDateString();
+
+            $JadwalNow = Jadwal::where('hari',$hari)->get();
+
+            foreach ($JadwalNow as $jwl){
+                $selesai = Carbon::createdFromFormat('H:i:s', $jwl->selesai);
+                if ($now->greaterThan($selesai)){
+                    $mahasiswa = User::where('kelas_id', $jwl->kelas_id)
+                                    ->where('role','mahasiswa')
+                                    ->get();
+
+                    foreach ($mahasiswa as $mhs) {
+                        $absen::create([
+                            'user_id' => $mhs->id,
+                            'jadwal_id' => $mhs->id,
+                            'tanggal' => $tgl,
+                            'status' => 'alpa'
+                        ]);
+                    }
+                }
+            }
+        })->everyMinute();
     }
 
     /**

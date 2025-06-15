@@ -1,8 +1,8 @@
 @extends('dashboard.layout.app')
 @section('content')
-<div class="page-title">
-            <h3>{{ $judul }}</h3>
-        </div>
+    <div class="page-title">
+        <h3>{{ $judul }}</h3>
+    </div>
     <div class="container">
         <div class="row">
             <div class="header">
@@ -10,9 +10,17 @@
             </div>
 
             <div class="absensi-box px-3 py-3 d-flex justify-content-between col-md-5">
-                <p style="font-size: 40px;">Absensi Siswa</p>
+                @if (Auth::user()->role === 'mahasiswa')
+                    <p style="font-size: 40px;">Absensi Mahasiswa</p>
+                @elseif(Auth::user()->role === 'admin')
+                    <p style="font-size: 40px;">Hi, {{ Auth::user()->name }} </p>
+                @else
+                    <p style="font-size: 40px;">Hi, {{ Auth::user()->name }} </p>
+                @endif
                 <div class="card-right d-flex align-items-center">
-                    <i class="fa-solid fa-calendar-days fa-5x"></i>
+                    @if (Auth::user()->role === 'mahasiswa')
+                        <i class="fa-solid fa-calendar-days fa-5x"></i>
+                    @endif
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -68,11 +76,22 @@
                             <h4>{{ $jwl->matkul->name }}</h4>
                             <p>{{ $jwl->hari }} | {{ $jwl->jam_mulai }} - {{ $jwl->jam_selesai }} |
                                 {{ $jwl->ruang }}</p>
-                            @if ($jwl->hari === \Carbon\Carbon::now()->translatedFormat('l'))
-                                <a href="#" class="btn btn-kelas btn-success" style="width: 45%">Masuk Kelas</a>
-                                <a href="#" class="btn btn-tugas btn-warning" style="width: 45%">Ruang Tugas</a>
+
+
+                            @if ($jwl->is_hari_ini && !$jwl->sudah_absen && $jwl->is_dalam_jam)
+                                <form action="{{ route('mahasiswa.absen', $jwl->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success" style="width: 45%">Masuk Kelas</button>
+                                    <a href="#" class="btn btn-tugas btn-warning" style="width: 45%">Ruang Tugas</a>
+                                </form>
+                            @elseif($jwl->sudah_absen)
+                                <button class="btn btn-warning" style="width: 45%" disabled>Sudah Absen</button>
+                                <a href="#" class="btn btn-tugas btn-warning" style="width: 45%" style="width: 45%">Ruang Tugas</a>
+                            @elseif(!$jwl->is_dalam_jam && $jwl->is_hari_ini)
+                                <button class="btn btn-secondary" disabled>Di luar jam</button>
+                                <a href="#" class="btn btn-tugas btn-warning" style="width: 45%" style="width: 45%">Ruang Tugas</a>
                             @else
-                                <a href="#" class="btn btn-kelas btn-danger" style="width: 45%">Masuk Kelas</a>
+                                <button class="btn btn-danger" style="width: 45%" disabled>Belum Ada Jadwal</button>
                                 <a href="#" class="btn btn-tugas btn-warning" style="width: 45%">Ruang Tugas</a>
                             @endif
                         </div>

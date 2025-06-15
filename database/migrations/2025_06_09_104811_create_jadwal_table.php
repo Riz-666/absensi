@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('matkul_id');
             $table->unsignedBigInteger('dosen_id');
-            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat']);
+            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat','Sabtu','Minggu']);
             $table->time('jam_mulai');
             $table->time('jam_selesai');
             $table->string('ruang');

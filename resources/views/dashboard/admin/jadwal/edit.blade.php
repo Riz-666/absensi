@@ -68,6 +68,12 @@
                                             <option value="Jumat"
                                                 {{ old('hari', $edit->hari ?? '') == 'Jumat' ? 'selected' : '' }}>Jumat
                                             </option>
+                                            <option value="Sabtu"
+                                                {{ old('hari', $edit->hari ?? '') == 'Sabtu' ? 'selected' : '' }}>Sabtu
+                                            </option>
+                                            <option value="Minggu"
+                                                {{ old('hari', $edit->hari ?? '') == 'Minggu' ? 'selected' : '' }}>Minggu
+                                            </option>
                                         </select>
                                     </div>
                                 </div>

@@ -35,7 +35,7 @@
                                 <div class="form-group">
                                     <label for="roundText">Password</label>
                                     <input type="password" id="roundText" class="form-control round"
-                                        value="{{ $edit->email }}" name="password">
+                                        placeholder="{{ $edit->password }}" name="password">
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -81,7 +81,9 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="roundText">Kelas</label>
+
                                     <select name="kelas_id" id="kelas" class="form-control round">
+                                        <option value="" selected disabled>-- Pilih Kelas --</option>
                                         @foreach ($kelas as $kls)
                                             <option value="{{ $kls->id }}" {{ $edit->kelas_id == $kls->id ? 'selected' : '' }}>{{ $kls->nama }}</option>
                                         @endforeach

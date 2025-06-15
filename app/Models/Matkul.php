@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Matkul extends Model
 {
-    protected $table = "matkul";
+    protected $table = 'matkul';
     protected $fillable = [
         'name',
         'kode',

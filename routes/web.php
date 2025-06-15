@@ -94,4 +94,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/jadwal/check{id}', [MahasiswaController::class, 'cekJadwal'])->name('mahasiswa.cek.jadwal');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('/update/profile', [DashboardController::class, 'update_profile'])->name('edit.profile.action');
+
+    Route::post('user/absen{jadwal}', [MahasiswaController::class, 'absen'])->name('mahasiswa.absen');
 });

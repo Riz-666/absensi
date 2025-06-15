@@ -424,9 +424,11 @@ class AdminController extends Controller
     public function tambah_matkul(){
         $matkul = Matkul::with('prodi')->get();
         $user = User::where('role', 'dosen')->get();
+        $prodi = Prodi::get();
         return view('dashboard.admin.matkul.add',[
             'matkul' => $matkul,
             'user' => $user,
+            'prodi' => $prodi,
             'judul' => 'Tambah matkul',
         ]);
     }

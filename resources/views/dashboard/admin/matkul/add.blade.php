@@ -49,8 +49,8 @@
                                         <label for="roundText">Prodi</label>
                                         <select name="prodi_id" class="form-control round select2">
                                         <option value="" selected disabled>-- Pilih Prodi --</option>
-                                        @foreach ($matkul as $mtl)
-                                            <option value="{{ $mtl->id }}">{{ $mtl->prodi->nama }}</option>
+                                        @foreach ($prodi as $prd)
+                                            <option value="{{ $prd->id }}">{{ $prd->nama }}</option>
                                         @endforeach
                                     </select>
                                     </div>
