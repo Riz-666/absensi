@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('role', ['mahasiswa', 'dosen', 'admin']);
             $table->string('nim')->nullable();
             $table->string('nip')->nullable();
+            $table->int('semester')->nullable();
             $table->unsignedBigInteger('kelas_id')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

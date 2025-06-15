@@ -21,7 +21,35 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'nim',
+        'nip',
+        'semester',
+        'kelas_id',
+        'status',
     ];
+    public function kelas(){
+        return $this->belongsTo(Kelas::class, 'kelas_id');
+    }
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class);
+    }
+
+    public function absensi()
+    {
+        return $this->hasMany(Absen::class, 'mahasiswa_id');
+    }
+
+    public function jadwalDosen()
+    {
+        return $this->hasMany(Jadwal::class, 'dosen_id');
+    }
+
+    public function berita()
+    {
+        return $this->hasMany(Berita::class, 'admin_id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
