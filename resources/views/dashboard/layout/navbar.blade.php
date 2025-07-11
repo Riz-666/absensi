@@ -8,7 +8,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav d-flex align-items-center navbar-light ms-auto">
-                
+
                 <li class="dropdown">
                     <a href="#" data-bs-toggle="dropdown"
                         class="nav-link dropdown-toggle nav-link-lg nav-link-user">
@@ -18,10 +18,7 @@
                         <div class="d-none d-md-block d-lg-inline-block">Hi, {{ Auth::user()->name }}</div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#"><i data-feather="user"></i> Account</a>
-                        <a class="dropdown-item" href="#"><i data-feather="mail"></i>
-                            Messages</a>
-                        <a class="dropdown-item" href="#"><i data-feather="settings"></i> Settings</a>
+                        <a class="dropdown-item" href="{{ Route('profile') }}"><i data-feather="user"></i> Account</a>
                         <div class="dropdown-divider"></div>
                     <form action="{{ Route('logout') }}" method="POST">
                         @csrf
