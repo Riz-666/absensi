@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DosenController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -27,6 +29,7 @@ Route::middleware(['guest'])->group(function () {
 
 //Login
 Route::post('login/auth', [LoginController::class, 'auth'])->name('authLogin');
+Route::get('/unlogin', [LoginController::class, 'unlogin'])->name('unlogin');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -90,10 +93,16 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    //Mahasiswa
     Route::get('/user/jadwal', [MahasiswaController::class, 'jadwal'])->name('mahasiswa.jadwal');
     Route::get('/user/jadwal/check{id}', [MahasiswaController::class, 'cekJadwal'])->name('mahasiswa.cek.jadwal');
     Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('/update/profile', [DashboardController::class, 'update_profile'])->name('edit.profile.action');
-
     Route::post('user/absen{jadwal}', [MahasiswaController::class, 'absen'])->name('mahasiswa.absen');
+    Route::get('/mading/mahasiswa', [MahasiswaController::class, 'mading_mahasiswa'])->name('mading.mahasiswa');
+
+    //Dosen
+    Route::get('/dosen/jadwal', [DosenController::class, 'jadwal_dosen'])->name('dosen.jadwal');
+    Route::get('/dosen/detail/jadwal{id}', [DosenController::class, 'detail_ajar'])->name('dosen.jadwal.detail');
+    Route::post('/dosen/mahasiswa/delete',[DosenController::class, 'delete'])->name('absen.delete');
 });

@@ -68,7 +68,6 @@
         </script>
     @endif
 
-
     <script type="text/javascript">
         $(document).on('click', '.show_confirm', function(event) {
             event.preventDefault();
@@ -108,6 +107,7 @@
                 console.error(error);
             });
     </script>
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.select2').select2({
@@ -127,16 +127,16 @@
         @endif
     </script>
 
-    @if(session('status'))
-    <script>
-        Swal.fire({
-            position: "top-end",
-            title: 'Selamat Datang',
-            text: '{{ session('status') }}',
-            showConfirmButton: false,
-            timer: 3000
-        });
-    </script>
+    @if (session('status'))
+        <script>
+            Swal.fire({
+                position: "top-end",
+                title: 'Selamat Datang',
+                text: '{{ session('status') }}',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
     @endif
 </body>
 

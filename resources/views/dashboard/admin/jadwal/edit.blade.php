@@ -19,7 +19,7 @@
                                     <div class="form-group">
                                         <label for="roundText">Mata Kuliah</label>
                                         {{-- enum --}}
-                                        <select name="matkul_id" id="matkul_id" class="form-control round">
+                                        <select name="matkul_id" id="matkul_id" class="form-control select2 round">
                                             <option value="" selected disabled>-- Pilih Kelas --</option>
                                             @foreach ($matkul as $mtl)
                                                 <option
@@ -33,7 +33,7 @@
                                     <div class="form-group">
                                         <label for="roundText">Dosen</label>
                                         {{-- enum --}}
-                                        <select name="dosen_id" id="dosen_id" class="form-control round">
+                                        <select name="dosen_id" id="dosen_id" class="form-control select2 round">
                                             <option value="" selected disabled>-- Pilih Kelas --</option>
                                             @foreach ($dosen as $dsn)
                                                 <option
@@ -49,7 +49,7 @@
                                     <div class="form-group">
                                         <label for="roundText">Hari</label>
                                         {{-- enum --}}
-                                        <select name="hari" id="hari" class="form-control round">
+                                        <select name="hari" id="hari" class="form-control round select2">
                                             <option value="" disabled
                                                 {{ old('hari', $edit->hari ?? '') == '' ? 'selected' : '' }}>-- Pilih Hari
                                                 --</option>
@@ -111,7 +111,7 @@
                                     <div class="form-group">
                                         <label for="roundText">prodi</label>
                                         {{-- enum --}}
-                                        <select name="prodi_id" id="prodi_id" class="form-control round">
+                                        <select name="prodi_id" id="prodi_id" class="form-control select2 round">
                                             <option value="" selected disabled>-- Pilih Kelas --</option>
                                             @foreach ($prodi as $prd)
                                                 <option

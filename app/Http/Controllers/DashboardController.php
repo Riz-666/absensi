@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absen;
 use App\Models\Jadwal;
 use App\Models\Kelas;
+use App\Models\Matkul;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -19,11 +20,10 @@ class DashboardController extends Controller
         $nmkls = $mhs->kelas->nama ?? null;
         $hariIni = Carbon::now()->translatedFormat('l');
         $jamSekarang = Carbon::now()->format('H:i');
+
+
         $jadwal = Jadwal::with(['matkul', 'dosen', 'prodi'])
             ->where('kelas', $nmkls)
-            ->get();
-        $absen = Jadwal::with(['matkul', 'dosen', 'prodi'])
-            ->where('kelas', $mhs->kelas->nama)
             ->get()
             ->map(function ($j) use ($mhs, $hariIni, $jamSekarang) {
                 $j->sudah_absen = Absen::where('user_id', $mhs->id)->where('jadwal_id', $j->id)->whereDate('tanggal', Carbon::today())->exists();
@@ -35,6 +35,13 @@ class DashboardController extends Controller
             });
         $dosen = User::where('role', 'dosen')->get();
 
+        $absen = Absen::where('user_id', Auth::id())
+                           ->where('status', 'hadir')
+                           ->count();
+
+        $matkul = Matkul::where('dosen_id',Auth::id())
+                        ->count();
+
         Carbon::setLocale('id');
         $tglNow = Carbon::now()->translatedFormat('l,d F Y');
         return view('dashboard.dashboard', [
@@ -43,6 +50,7 @@ class DashboardController extends Controller
             'dosen' => $dosen,
             'tglNow' => $tglNow,
             'absen' => $absen,
+            'matkul' => $matkul
         ]);
     }
 

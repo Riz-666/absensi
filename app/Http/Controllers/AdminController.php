@@ -113,11 +113,16 @@ class AdminController extends Controller
     //UNTUK JADWAL
 
     public function jadwal(){
-        $jadwal = Jadwal::with(['matkul', 'dosen', 'prodi'])->get();
+        $jadwal = Jadwal::with(['matkul', 'dosen', 'prodi'])
+                        ->orderBy('created_at', 'desc')
+                        ->get();
         $dosen = User::where('role', 'dosen')->get();
+
+        $kelas = Kelas::get();
         return view('dashboard.admin.jadwal.jadwal',[
             'jadwal' => $jadwal,
             'dosen' => $dosen,
+            'kelas' => $kelas,
             'judul' => 'Kelola Jadwal'
         ]);
     }
@@ -126,12 +131,14 @@ class AdminController extends Controller
         $matkul = Matkul::get();
         $prodi = Prodi::get();
         $dosen = User::where('role', 'dosen')->get();
+        $kelas = Kelas::get();
         return view('dashboard.admin.jadwal.add',[
             'judul' => 'Tambah Jadwal',
             'jadwal' => $jadwal,
             'dosen' => $dosen,
             'matkul' => $matkul,
-            'prodi' => $prodi
+            'prodi' => $prodi,
+            'kelas' => $kelas,
         ]);
     }
     public function tambah_jadwal_aksi(Request $request){
@@ -487,6 +494,8 @@ class AdminController extends Controller
 
     public function destroy_matkul(string $id){
         $matkul = Matkul::findOrFail($id);
+
+
         $matkul->delete();
         return redirect()->route('matkul')->with('success');
     }

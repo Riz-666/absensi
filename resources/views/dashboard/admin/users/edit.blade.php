@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label for="roundText">Role</label>
                                     {{-- enum --}}
-                                    <select name="role" id="role" class="form-control round">
+                                    <select name="role" id="role" class="form-control select2 round">
                                         <option value="" selected disabled>-- Pilih Role --</option>
                                         <option value="admin" {{ old('role', $edit->role == "admin" ? 'selected' : '') }}>Admin</option>
                                         <option value="dosen" {{ old('role', $edit->role == "dosen" ? 'selected' : '') }}>Dosen</option>
@@ -82,7 +82,7 @@
                                 <div class="form-group">
                                     <label for="roundText">Kelas</label>
 
-                                    <select name="kelas_id" id="kelas" class="form-control round">
+                                    <select name="kelas_id" id="kelas" class="form-control select2 round">
                                         <option value="" selected disabled>-- Pilih Kelas --</option>
                                         @foreach ($kelas as $kls)
                                             <option value="{{ $kls->id }}" {{ $edit->kelas_id == $kls->id ? 'selected' : '' }}>{{ $kls->nama }}</option>

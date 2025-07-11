@@ -19,7 +19,7 @@
                                 <div class="form-group">
                                     <label for="roundText">Mata Kuliah</label>
                                     {{-- enum --}}
-                                    <select name="matkul_id" id="matkul_id" class="form-control round">
+                                    <select name="matkul_id" id="matkul_id" class="form-control round select2">
                                         <option value="" selected disabled>-- Pilih Mata Kuliah --</option>
                                         @foreach ($matkul as $mtl)
                                             <option value="{{ $mtl->id }}">{{ $mtl->name }}</option>
@@ -31,7 +31,7 @@
                                 <div class="form-group">
                                     <label for="roundText">Dosen</label>
                                     {{-- enum --}}
-                                    <select name="dosen_id" id="dosen_id" class="form-control round">
+                                    <select name="dosen_id" id="dosen_id" class="form-control round select2">
                                         <option value="" selected disabled>-- Pilih Dosen --</option>
                                         @foreach ($dosen as $dsn)
                                             <option value="{{ $dsn->id }}">{{ $dsn->name }}</option>
@@ -45,7 +45,7 @@
                                 <div class="form-group">
                                     <label for="roundText">Hari</label>
                                     {{-- enum --}}
-                                    <select name="hari" id="hari" class="form-control round">
+                                    <select name="hari" id="hari" class="form-control round select2">
                                         <option value="" selected disabled>-- Pilih Hari --</option>
                                         <option value="senin">Senin</option>
                                         <option value="selasa">Selasa</option>
@@ -83,15 +83,19 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="roundText">Kelas</label>
-                                    <input type="text" id="roundText" class="form-control round"
-                                        placeholder="Masukan Kelas" name="kelas">
+                                        <select name="kelas" id="" class="form-control round select2">
+                                            <option value="">-- Pilih Kelas --</option>
+                                            @foreach ($kelas as $kls)
+                                                <option value="{{ $kls->id }}">{{ $kls->nama }}</option>
+                                            @endforeach
+                                        </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label for="roundText">prodi</label>
                                     {{-- enum --}}
-                                    <select name="prodi_id" id="prodi_id" class="form-control round">
+                                    <select name="prodi_id" id="prodi_id" class="form-control round select2">
                                         <option value="" selected disabled>-- Pilih Prodi --</option>
                                         @foreach ($prodi as $prd)
                                             <option value="{{ $prd->id }}">{{ $prd->nama }}</option>

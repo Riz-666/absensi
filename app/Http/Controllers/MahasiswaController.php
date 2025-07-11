@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Absen;
 use App\Models\Jadwal;
+use App\Models\Mading;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -47,41 +48,46 @@ class MahasiswaController extends Controller
     }
 
     public function absen(Request $request, $jadwalId)
-{
-    $user = auth()->user(); // Huruf kecil 'auth()' lebih baik
-    $jadwal = Jadwal::findOrFail($jadwalId);
+    {
+        $user = auth()->user(); // Huruf kecil 'auth()' lebih baik
+        $jadwal = Jadwal::findOrFail($jadwalId);
 
-    $now = now(); // Gunakan helper global `now()`
-    $tgl = $now->toDateString(); // Tidak perlu $jadwalId di sini
+        $now = now(); // Gunakan helper global `now()`
+        $tgl = $now->toDateString(); // Tidak perlu $jadwalId di sini
 
-    // Perbaiki: gunakan field yang benar dari tabel `jadwal`
-    $mulai = Carbon::createFromFormat('H:i:s', $jadwal->jam_mulai);
-    $selesai = Carbon::createFromFormat('H:i:s', $jadwal->jam_selesai);
+        // Perbaiki: gunakan field yang benar dari tabel `jadwal`
+        $mulai = Carbon::createFromFormat('H:i:s', $jadwal->jam_mulai);
+        $selesai = Carbon::createFromFormat('H:i:s', $jadwal->jam_selesai);
 
-    // Cek apakah sudah absen hari ini
-    $sudah = Absen::where('user_id', $user->id)
-        ->where('jadwal_id', $jadwalId)
-        ->whereDate('tanggal', $tgl)
-        ->exists();
+        // Cek apakah sudah absen hari ini
+        $sudah = Absen::where('user_id', $user->id)->where('jadwal_id', $jadwalId)->whereDate('tanggal', $tgl)->exists();
 
-    if ($sudah) {
-        return back()->with('absen_info', 'Kamu sudah absen hari ini.');
+        if ($sudah) {
+            return back()->with('absen_info', 'Kamu sudah absen hari ini.');
+        }
+
+        // Jika sekarang berada di antara jam_mulai dan jam_selesai
+        if ($now->between($mulai, $selesai)) {
+            Absen::create([
+                'user_id' => $user->id,
+                'jadwal_id' => $jadwalId,
+                'tanggal' => $tgl,
+                'status' => 'hadir',
+                'keterangan' => null,
+            ]);
+
+            return back()->with('absen_success', 'Absen Berhasil!');
+        }
+
+        return back()->with('absen_error', 'Absen hanya bisa dilakukan antara jam ' . $jadwal->jam_mulai . ' dan ' . $jadwal->jam_selesai);
     }
 
-    // Jika sekarang berada di antara jam_mulai dan jam_selesai
-    if ($now->between($mulai, $selesai)) {
-        Absen::create([
-            'user_id' => $user->id,
-            'jadwal_id' => $jadwalId,
-            'tanggal' => $tgl, 
-            'status' => 'hadir',
-            'keterangan' => null
+    public function mading_mahasiswa(){
+        $mading = Mading::with(['user','kelas'])->latest()->get();
+
+        return view('dashboard.mahasiswa.mading.mading',[
+            'judul' => 'Mading Mahasiswa',
+            'mading' => $mading
         ]);
-
-        return back()->with('absen_success', 'Absen Berhasil!');
     }
-
-    return back()->with('absen_error', 'Absen hanya bisa dilakukan antara jam ' . $jadwal->jam_mulai . ' dan ' . $jadwal->jam_selesai);
-}
-
 }

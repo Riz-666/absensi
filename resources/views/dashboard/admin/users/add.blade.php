@@ -81,7 +81,7 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label for="roundText">Kelas</label>
-                                    <select name="kelas_id" id="kelas" class="form-control round">
+                                    <select name="kelas_id" id="kelas" class="form-control select2 round">
                                         <option value="" selected disabled>-- Pilih Kelas --</option>
                                         @foreach ($kelas as $kls)
                                             <option value="{{ $kls->id }}">{{ $kls->nama }}</option>

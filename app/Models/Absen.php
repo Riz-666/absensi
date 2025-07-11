@@ -25,5 +25,8 @@ class Absen extends Model
     {
         return $this->belongsTo(Jadwal::class);
     }
+    public function matkul(){
+        return $this->belongsTo(Matkul::class);
+    }
 
 }

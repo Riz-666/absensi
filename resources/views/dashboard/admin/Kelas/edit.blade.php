@@ -37,7 +37,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="roundText">Prodi</label>
-                                        <select name="prodi_id" id="" class="form-control round">
+                                        <select name="prodi_id" id="" class="form-control select2 round">
                                                 <option value="">-- Pilih Prodi --</option>
                                             @foreach ($prodi as $prd)
                                                 <option value="{{ $prd->id }}" {{ $edit->prodi_id == $prd->id ? 'selected' : '' }}>{{ $prd->nama }}</option>
@@ -48,7 +48,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label for="roundText">Wali Kelas</label>
-                                        <select name="wali_kelas_id" id="" class="form-control round">
+                                        <select name="wali_kelas_id" id="" class="form-control select2 round">
                                                 <option value="">-- Pilih Wali Kelas --</option>
                                             @foreach ($wali as $wl)
                                                 <option value="{{ $wl->id }}" {{ $edit->wali_kelas_id == $wl->id ? 'selected' : '' }}>{{ $wl->name }}</option>

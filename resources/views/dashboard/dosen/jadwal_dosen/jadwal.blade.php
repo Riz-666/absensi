@@ -30,20 +30,7 @@
                                     <br>
                                     Prodi : {{ $jwl->prodi->nama }}
                                 </p>
-
-                                @if ($jwl->is_hari_ini && !$jwl->sudah_absen && $jwl->is_dalam_jam)
-                                    <form action="{{ route('mahasiswa.absen', $jwl->id) }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-success w-100">Absen</button>
-                                    </form>
-                                @elseif($jwl->sudah_absen)
-                                    <button class="btn btn-warning w-100" disabled>Sudah Absen</button>
-                                @elseif(!$jwl->is_dalam_jam && $jwl->is_hari_ini)
-                                    <button class="btn btn-secondary w-100" disabled>Di luar jam Absen</button>
-                                @else
-                                    <button class="btn btn-danger w-100" disabled>Belum Ada Jadwal</button>
-                                @endif
-
+                                <a href="{{ Route('dosen.jadwal.detail', $jwl->id) }}" class="btn btn-warning w-100" disabled>Cek Kehadiran Siswa</a>
                             </div>
                         </div>
                     </div>
